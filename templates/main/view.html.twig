@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent ()}} {% endblock %}
+
+{% block body %}
+    <div id="mainer" class="mainer">
+        <div class="container-fluid container-max-width-xl">
+            {% for water in water %}
+                <div class="mt-4 d-flex justify-content-between title-set">
+                    <h3 class="item-name">{{ water.WaterName }}</h3>
+                    <div class="d-none d-md-inline-block align-self-baseline"></div>
+                </div>
+                <div class="row detail-set">
+                    <div class="col-24 col-sm-8 col-md-6 attr-cover">
+                        <td><img src="{{ asset('uploads/ImagesWater/' ~ water.Image) }}" height="400px" width="300px"></td>
+                    </div>
+                </div>
+                <div class="col-24 col-sm-16 col-md-18 mt-4 mt-sm-0 attr-main">
+                    <div class="attr-item">
+                        <b class="text-muted">Inventor Name:</b>
+                        <span>
+                                    <a>{{ water.Name }}</a>
+                                </span>
+                    </div>
+                    <div class="attr-item">
+                        <b class="text-muted">Genre Name:</b>
+                        <span>
+                                    <a>{{ water.GenreName }}</a>
+                                </span>
+                    </div>
+                    <div class="attr-item">
+                        <b class="text-muted">Price:</b>
+                        <span>
+                                    <a>{{ water.Price }}.000 VND</a>
+                                </span>
+                    </div>
+
+                    <h5 class="mt-3 text-muted">Description:</h5>
+                    <div class="mt-3">
+                        <div id="limit-height-ctrl-description" class="limit-height-ctrl max -100px contracted">
+                            <div id="limit-height-body-description" class="limit-height-body">
+                                <div class="limit-html">{{ water.Description }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

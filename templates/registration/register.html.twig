@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Welcome! | WaterNew {% endblock %}
+
+{% block body %}
+
+    <div id="mainer" class="mainer">
+        <div class="container-fluid container-max-width-xl">
+            <div class="mt-4 justify-content-between line-b-f">
+                <h4>Register</h4>
+                <div class="container">
+                    {% for flash_error in app.flashes('verify_email_error') %}
+                        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                    {% endfor %}
+                    <div class="mt-4 d-flex register">
+                        {{ form_start(registrationForm) }}
+                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(registrationForm.plainPassword, {
+                            label: 'Password'
+                        }) }}
+                        {{ form_row(registrationForm.agreeTerms) }}
+                        <button type="submit" class="btn-primary">Register</button>
+                        {{ form_end(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
