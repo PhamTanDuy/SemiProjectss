@@ -99,7 +99,7 @@ class WaterController extends AbstractController
     /**
      * @Route("admin/water/edit/{id}", name="app_edit_water")
      */
-    public function edit(ManagerRegistry $doctrine, int $id, Request $request): Response
+    public function edit(ManagerRegistry $doctrine, int $id, Request $request, SluggerInterface $slugger): Response
     {
         $entitymanager = $doctrine->getManager();
         $water = $entitymanager->getRepository(Water::class)->find($id);
@@ -107,7 +107,28 @@ class WaterController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form->get('Image')->getData();
+            if ($uploadedFile) {
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
 
+                // Move the file to the directory where image are stored
+                try {
+                    $uploadedFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash(
+                        'error',
+                        'Cannot Upload'
+                    );
+                }
+            }
+                    $water->setImage($newFilename);
             $entitymanager = $doctrine->getManager();
             $entitymanager->persist($water);
             $entitymanager->flush();
