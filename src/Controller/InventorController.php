@@ -39,7 +39,7 @@ class InventorController extends AbstractController
                 'notice',
                 'New Inventor Added'
             );
-            return $this->redirectToRoute('app_create_artist');
+            return $this->redirectToRoute('app_create_inventor');
         }
         return $this->render('inventor/create.html.twig', [
             'form' => $form->createView()

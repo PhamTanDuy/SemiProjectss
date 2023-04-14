@@ -14,10 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+
 class WaterController extends AbstractController
 {
     /**
-     * @Route("add/WaterWithGenre", name="water_list")
+     * @Route("/", name="water_list")
      */
 
     public function ListAction(ManagerRegistry $doctrine): Response
